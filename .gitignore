@@ -1,0 +1,9 @@
+# MoonBit build artifacts
+_build/
+.mooncakes/
+target/
+
+# local scratch
+*.log
+*.tmp
+co*.txt

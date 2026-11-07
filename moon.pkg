@@ -1,0 +1,11 @@
+import {
+  "moonbitlang/core/ref",
+}
+
+options(
+  targets: {
+    "storage_file.mbt": [ "native" ],
+    "storage_file_test.mbt": [ "native" ],
+  },
+  "native-stub": [ "file_stub.c" ],
+)

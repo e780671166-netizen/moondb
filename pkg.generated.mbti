@@ -1,0 +1,63 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moondb"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn crc32(Bytes) -> UInt32
+
+// Errors
+#derive(@debug.Debug)
+pub suberror DbError {
+  Corrupt(String)
+  StorageFailed(String)
+  Closed
+  InvalidArgument(String)
+}
+pub fn DbError::to_repr(Self) -> @debug.Repr
+
+// Types and methods
+pub struct Db[S] {
+  // private fields
+}
+pub fn[S : Storage] Db::close(Self[S]) -> Unit raise DbError
+pub fn[S] Db::corrupted_entries(Self[S]) -> Int32
+pub fn[S] Db::count(Self[S]) -> Int32 raise DbError
+pub fn[S : Storage] Db::delete(Self[S], key~ : String, sync? : Bool) -> Bool raise DbError
+pub fn[S] Db::fold(Self[S], (String, Bytes) -> Unit) -> Unit raise DbError
+pub fn[S] Db::get(Self[S], key~ : String) -> Bytes? raise DbError
+pub fn[S] Db::keys(Self[S]) -> Array[String] raise DbError
+pub fn[S] Db::log_bytes(Self[S]) -> Int32
+pub fn[S : Storage] Db::merge(Self[S]) -> Int32 raise DbError
+pub fn[S : Storage] Db::open(S) -> Self[S] raise DbError
+pub fn[S] Db::pending_since_sync(Self[S]) -> Int32
+pub fn[S : Storage] Db::put(Self[S], key~ : String, value~ : Bytes, sync? : Bool) -> Unit raise DbError
+pub fn[S : Storage] Db::sync(Self[S]) -> Unit raise DbError
+
+pub struct MemStorage {
+  // private fields
+}
+pub fn MemStorage::append(Self, Bytes) -> Unit raise DbError
+pub fn MemStorage::close(Self) -> Unit raise DbError
+pub fn MemStorage::new() -> Self
+pub fn MemStorage::read_all(Self) -> Bytes raise DbError
+pub fn MemStorage::replace_all(Self, Bytes) -> Unit raise DbError
+pub fn MemStorage::size(Self) -> Int32 raise DbError
+pub fn MemStorage::sync(Self) -> Unit raise DbError
+pub fn MemStorage::truncate(Self, Int32) -> Unit raise DbError
+pub impl Storage for MemStorage
+
+// Type aliases
+
+// Traits
+pub trait Storage {
+  fn append(Self, Bytes) -> Unit raise DbError
+  fn read_all(Self) -> Bytes raise DbError
+  fn truncate(Self, Int32) -> Unit raise DbError
+  fn replace_all(Self, Bytes) -> Unit raise DbError
+  fn size(Self) -> Int32 raise DbError
+  fn sync(Self) -> Unit raise DbError
+  fn close(Self) -> Unit raise DbError
+}
